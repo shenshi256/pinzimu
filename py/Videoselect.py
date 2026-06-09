@@ -34,7 +34,6 @@ class Videoselect(QMainWindow):
         self.ui.setupUi(self)
         setup_window_icon(self)
         setup_window_title(self)
-        self.ui.labelFooter.setText(COPYRIGHT)
         self.video_path = video_path
         self.main_window = main_window
         self._project_dir = get_project_root()

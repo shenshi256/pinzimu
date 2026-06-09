@@ -12,7 +12,6 @@ class ProjectInfoWindow(QMainWindow):
         super().__init__(parent)
         self.ui = Ui_ProjectInfo()
         self.ui.setupUi(self)
-        self.ui.labelFooter.setText(COPYRIGHT)
         setup_window_title(self)
         self.ui.btnClose.clicked.connect(self.close)
         self._load_html()

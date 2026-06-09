@@ -203,6 +203,7 @@ class Ui_SettingsWindow(object):
         self.horizontalLayout_footer.setContentsMargins(0, 0, 0, 0)
         self.labelFooter = QLabel(self.frameFooter)
         self.labelFooter.setObjectName(u"labelFooter")
+        self.labelFooter.setOpenExternalLinks(True)
         self.labelFooter.setStyleSheet(u"color: #9CA3AF;\n"
 "font-size: 12px;")
 
@@ -260,7 +261,7 @@ class Ui_SettingsWindow(object):
         self.labelVideoFrames.setText(QCoreApplication.translate("SettingsWindow", u"\u89c6\u9891\u5e27\u6570\u91cf", None))
         self.editVideoFrames.setPlaceholderText(QCoreApplication.translate("SettingsWindow", u"1 - 999999", None))
         self.editVideoFrames.setText(QCoreApplication.translate("SettingsWindow", u"200", None))
-        self.labelFooter.setText(QCoreApplication.translate("SettingsWindow", u"\u00a9 2026 \u62fc\u5b57\u5e55 - \u5feb\u901f\u751f\u6210\u8fde\u7eed\u5b57\u5e55\u957f\u56fe", None))
+        self.labelFooter.setText(QCoreApplication.translate("SettingsWindow", u"<a href=\"https://www.yuanheyuekeji.com/\" style=\"text-decoration:none; color:#9CA3AF;\">\u00a9 2026 \u62fc\u5b57\u5e55 - \u5feb\u901f\u751f\u6210\u8fde\u7eed\u5b57\u5e55\u957f\u56fe</a>", None))
         self.btnSave.setText(QCoreApplication.translate("SettingsWindow", u"\u4fdd\u5b58", None))
     # retranslateUi
 

@@ -442,6 +442,7 @@ class Ui_ImageStitcher(object):
 
         self.labelFooter = QLabel(self.contentContainer)
         self.labelFooter.setObjectName(u"labelFooter")
+        self.labelFooter.setOpenExternalLinks(True)
         self.labelFooter.setMinimumSize(QSize(0, 48))
         self.labelFooter.setStyleSheet(u"#labelFooter {\n"
 "    color: #9CA3AF;\n"
@@ -485,6 +486,6 @@ class Ui_ImageStitcher(object):
         self.btnBackToVideo.setText(QCoreApplication.translate("ImageStitcher", u"\u8fd4\u56de", None))
         self.btnGenerate.setText(QCoreApplication.translate("ImageStitcher", u"\u751f\u6210\u5b57\u5e55\u957f\u56fe", None))
         self.labelTips.setText(QCoreApplication.translate("ImageStitcher", u"\u63d0\u793a\uff1a\u5148\u8bbe\u7f6e\u597d\u5b57\u5e55\u884c\u4f4d\u7f6e\uff0c\u518d\u622a\u56fe\u62fc\u63a5\u3002\u652f\u6301\u62d6\u62fd\u6392\u5e8f\u3001\u667a\u80fd\u53bb\u91cd\u548c\u9884\u89c8\u3002", None))
-        self.labelFooter.setText(QCoreApplication.translate("ImageStitcher", u"\u00a9 2026 \u62fc\u5b57\u5e55 - \u5feb\u901f\u751f\u6210\u8fde\u7eed\u5b57\u5e55\u957f\u56fe", None))
+        self.labelFooter.setText(QCoreApplication.translate("ImageStitcher", u"<a href=\"https://www.yuanheyuekeji.com/\" style=\"text-decoration:none; color:#9CA3AF;\">\u00a9 2026 \u62fc\u5b57\u5e55 - \u5feb\u901f\u751f\u6210\u8fde\u7eed\u5b57\u5e55\u957f\u56fe</a>", None))
     # retranslateUi
 

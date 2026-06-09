@@ -124,7 +124,6 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         setup_window_icon(self)
         setup_window_title(self)
-        self.ui.labelFooter.setText(COPYRIGHT)
         self.current_mode = "image"
         self.video_select_window = None
         self.image_select_window = None

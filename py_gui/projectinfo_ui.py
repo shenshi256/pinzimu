@@ -107,6 +107,7 @@ class Ui_ProjectInfo(object):
 
         self.labelFooter = QLabel(self.contentContainer)
         self.labelFooter.setObjectName(u"labelFooter")
+        self.labelFooter.setOpenExternalLinks(True)
         self.labelFooter.setStyleSheet(u"#labelFooter {\n"
 "    color: #6B7280;\n"
 "    font-size: 14px;\n"
@@ -165,7 +166,7 @@ class Ui_ProjectInfo(object):
         ProjectInfo.setWindowTitle(QCoreApplication.translate("ProjectInfo", u"\u9879\u76ee\u4ecb\u7ecd", None))
         self.labelTitle.setText(QCoreApplication.translate("ProjectInfo", u"\u9879\u76ee\u4ecb\u7ecd", None))
         self.textBrowserInfo.setHtml(QCoreApplication.translate("ProjectInfo", u"<h2>\u9879\u76ee\u4ecb\u7ecd</h2><p>\u5728\u6b64\u5904\u586b\u5199\u9879\u76ee\u7684 HTML \u4ecb\u7ecd\u5185\u5bb9\u3002</p>", None))
-        self.labelFooter.setText(QCoreApplication.translate("ProjectInfo", u"\u00a9 2026 \u62fc\u5b57\u5e55 - \u5feb\u901f\u751f\u6210\u8fde\u7eed\u5b57\u5e55\u957f\u56fe", None))
+        self.labelFooter.setText(QCoreApplication.translate("ProjectInfo", u"<a href=\"https://www.yuanheyuekeji.com/\" style=\"text-decoration:none; color:#6B7280;\">\u00a9 2026 \u62fc\u5b57\u5e55 - \u5feb\u901f\u751f\u6210\u8fde\u7eed\u5b57\u5e55\u957f\u56fe</a>", None))
         self.btnClose.setText(QCoreApplication.translate("ProjectInfo", u"\u5173\u95ed", None))
     # retranslateUi
 

@@ -24,7 +24,7 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1245, 721)
-        MainWindow.setMinimumSize(QSize(1000, 650))
+        MainWindow.setMinimumSize(QSize(800, 600))
         MainWindow.setStyleSheet(u"QMainWindow {\n"
 "    background-color: #FFFFFF;\n"
 "    font-family: \"Microsoft YaHei\", \"Segoe UI\", sans-serif;\n"
@@ -452,6 +452,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_footer.setContentsMargins(0, 0, 0, 0)
         self.labelFooter = QLabel(self.footerFrame)
         self.labelFooter.setObjectName(u"labelFooter")
+        self.labelFooter.setOpenExternalLinks(True)
         self.labelFooter.setStyleSheet(u"#labelFooter {\n"
 "    color: #6B7280;\n"
 "    font-size: 14px;\n"
@@ -483,6 +484,6 @@ class Ui_MainWindow(object):
         self.labelUploadSubtitle.setText(QCoreApplication.translate("MainWindow", u"\u9009\u62e9\u591a\u5f20\u56fe\u7247\uff0c\u7cfb\u7edf\u5c06\u6309\u987a\u5e8f\u62fc\u63a5\u6210\u5b57\u5e55\u957f\u56fe", None))
         self.btnSelectFile.setText(QCoreApplication.translate("MainWindow", u"\u9009\u62e9\u56fe\u7247", None))
         self.labelFormats.setText(QCoreApplication.translate("MainWindow", u"\u652f\u6301\u683c\u5f0f\uff1aJPG\u3001PNG\u3001GIF\u3001WEBP", None))
-        self.labelFooter.setText(QCoreApplication.translate("MainWindow", u"\u00a9 2026 \u62fc\u5b57\u5e55 - \u5feb\u901f\u751f\u6210\u8fde\u7eed\u5b57\u5e55\u957f\u56fe", None))
+        self.labelFooter.setText(QCoreApplication.translate("MainWindow", u"<a href=\"https://www.yuanheyuekeji.com/\" style=\"text-decoration:none; color:#6B7280;\">\u00a9 2026 \u62fc\u5b57\u5e55 - \u5feb\u901f\u751f\u6210\u8fde\u7eed\u5b57\u5e55\u957f\u56fe</a>", None))
     # retranslateUi
 

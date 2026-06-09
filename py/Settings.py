@@ -10,7 +10,7 @@
 from PySide6.QtGui import QIntValidator
 from PySide6.QtWidgets import QMainWindow
 from py_gui.settings_ui import Ui_SettingsWindow
-from utils import (setup_window_icon, setup_window_title, COPYRIGHT,
+from utils import (setup_window_icon, setup_window_title,
                    get_logging_enabled, set_logging_enabled,
                    get_max_image_count, set_max_image_count,
                    get_max_video_frames, set_max_video_frames,
@@ -27,8 +27,6 @@ class SettingsWindow(QMainWindow):
         self.ui.setupUi(self)
         setup_window_icon(self)
         setup_window_title(self, "设置")
-        self.ui.labelFooter.setText(COPYRIGHT)
-
         self._valid_image_count = 50
         self._valid_video_frames = 200
 

@@ -390,6 +390,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_footer.setContentsMargins(0, 0, 0, 0)
         self.labelFooter = QLabel(self.footerFrame)
         self.labelFooter.setObjectName(u"labelFooter")
+        self.labelFooter.setOpenExternalLinks(True)
         self.labelFooter.setStyleSheet(u"#labelFooter {\n"
 "    color: #6B7280;\n"
 "    font-size: 14px;\n"
@@ -420,6 +421,6 @@ class Ui_MainWindow(object):
         self.labelAreaHeight.setText(QCoreApplication.translate("MainWindow", u"\u5b57\u5e55\u533a\u57df\u9ad8\u5ea6\uff1a20% \u00b7 \u4f4d\u7f6e\u5df2\u81ea\u52a8\u4fdd\u5b58", None))
         self.btnBack.setText(QCoreApplication.translate("MainWindow", u"<- \u8fd4\u56de", None))
         self.btnContinue.setText(QCoreApplication.translate("MainWindow", u"\u7ee7\u7eed\u751f\u6210\u957f\u56fe", None))
-        self.labelFooter.setText(QCoreApplication.translate("MainWindow", u"\u00a9 2026 \u62fc\u5b57\u5e55 - \u5feb\u901f\u751f\u6210\u8fde\u7eed\u5b57\u5e55\u957f\u56fe", None))
+        self.labelFooter.setText(QCoreApplication.translate("MainWindow", u"<a href=\"https://www.yuanheyuekeji.com/\" style=\"text-decoration:none; color:#6B7280;\">\u00a9 2026 \u62fc\u5b57\u5e55 - \u5feb\u901f\u751f\u6210\u8fde\u7eed\u5b57\u5e55\u957f\u56fe</a>", None))
     # retranslateUi
 

@@ -97,7 +97,6 @@ class Imageselect(QMainWindow):
         self.ui.setupUi(self)
         setup_window_icon(self)
         setup_window_title(self)
-        self.ui.labelFooter.setText(COPYRIGHT)
         self.main_window = main_window
         self.image_paths = list(image_paths)
         self._current_index = 0

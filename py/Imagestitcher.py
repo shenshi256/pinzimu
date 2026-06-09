@@ -326,7 +326,6 @@ class Imagestitcher(QMainWindow):
         self.ui.setupUi(self)
         setup_window_icon(self)
         setup_window_title(self)
-        self.ui.labelFooter.setText(COPYRIGHT)
         self.frame_paths = list(frame_paths)
         self.subtitle_line_top = subtitle_line_top
         self.subtitle_line_bottom = subtitle_line_bottom

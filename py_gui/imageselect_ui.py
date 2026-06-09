@@ -514,6 +514,7 @@ class Ui_ImageSelect(object):
 
         self.labelFooter = QLabel(self.contentContainer)
         self.labelFooter.setObjectName(u"labelFooter")
+        self.labelFooter.setOpenExternalLinks(True)
         self.labelFooter.setMinimumSize(QSize(0, 48))
         self.labelFooter.setStyleSheet(u"#labelFooter {\n"
 "    color: #9CA3AF;\n"
@@ -568,6 +569,6 @@ class Ui_ImageSelect(object):
         self.labelImageAddHint.setText(QCoreApplication.translate("ImageSelect", u"\u53ef\u7ee7\u7eed\u6dfb\u52a0\u56fe\u7247\uff08\u6700\u591a50\u5f20\uff09", None))
         self.btnAddImages.setText(QCoreApplication.translate("ImageSelect", u"\u6dfb\u52a0\u66f4\u591a\u56fe\u7247", None))
         self.btnGenerate.setText(QCoreApplication.translate("ImageSelect", u"\u751f\u6210\u5b57\u5e55\u957f\u56fe", None))
-        self.labelFooter.setText(QCoreApplication.translate("ImageSelect", u"\u00a9 2026 \u62fc\u5b57\u5e55 - \u5feb\u901f\u751f\u6210\u8fde\u7eed\u5b57\u5e55\u957f\u56fe", None))
+        self.labelFooter.setText(QCoreApplication.translate("ImageSelect", u"<a href=\"https://www.yuanheyuekeji.com/\" style=\"text-decoration:none; color:#9CA3AF;\">\u00a9 2026 \u62fc\u5b57\u5e55 - \u5feb\u901f\u751f\u6210\u8fde\u7eed\u5b57\u5e55\u957f\u56fe</a>", None))
     # retranslateUi
 

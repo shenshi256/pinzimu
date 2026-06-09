@@ -543,6 +543,7 @@ class Ui_fileselect(object):
         self.verticalLayout_footer.setContentsMargins(0, 0, 0, 0)
         self.labelFooter = QLabel(self.footerFrame)
         self.labelFooter.setObjectName(u"labelFooter")
+        self.labelFooter.setOpenExternalLinks(True)
         self.labelFooter.setStyleSheet(u"#labelFooter {\n"
 "    color: #6B7280;\n"
 "    font-size: 14px;\n"
@@ -596,6 +597,6 @@ class Ui_fileselect(object):
         self.btnStartExtract.setText(QCoreApplication.translate("fileselect", u"\u5f00\u59cb\u63d0\u53d6\u5e27\u753b\u9762", None))
         self.btnBackToMain.setText(QCoreApplication.translate("fileselect", u"\u8fd4\u56de", None))
         self.labelExtractTip.setText(QCoreApplication.translate("fileselect", u"\u7cfb\u7edf\u5c06\u5728\u9009\u4e2d\u7684\u65f6\u95f4\u8303\u56f4\u5185\u6309\u6240\u9009\u9891\u7387\u63d0\u53d6\u753b\u9762\uff0c\u7528\u4e8e\u751f\u6210\u5b57\u5e55\u957f\u56fe", None))
-        self.labelFooter.setText(QCoreApplication.translate("fileselect", u"\u00a9 2026 \u62fc\u5b57\u5e55 - \u5feb\u901f\u751f\u6210\u8fde\u7eed\u5b57\u5e55\u957f\u56fe", None))
+        self.labelFooter.setText(QCoreApplication.translate("fileselect", u"<a href=\"https://www.yuanheyuekeji.com/\" style=\"text-decoration:none; color:#6B7280;\">\u00a9 2026 \u62fc\u5b57\u5e55 - \u5feb\u901f\u751f\u6210\u8fde\u7eed\u5b57\u5e55\u957f\u56fe</a>", None))
     # retranslateUi
 
