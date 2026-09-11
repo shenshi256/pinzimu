@@ -25,7 +25,7 @@ class Ui_fileselect(object):
         if not fileselect.objectName():
             fileselect.setObjectName(u"fileselect")
         fileselect.resize(1000, 650)
-        fileselect.setMinimumSize(QSize(800, 600))
+        fileselect.setMinimumSize(QSize(1000, 800))
         fileselect.setStyleSheet(u"QMainWindow {\n"
 "    background-color: #FFFFFF;\n"
 "    font-family: \"Microsoft YaHei\", \"Segoe UI\", sans-serif;\n"
@@ -430,6 +430,7 @@ class Ui_fileselect(object):
         self.horizontalLayout_frequency.setObjectName(u"horizontalLayout_frequency")
         self.labelFrequencyTitle = QLabel(self.operationPanel)
         self.labelFrequencyTitle.setObjectName(u"labelFrequencyTitle")
+        self.labelFrequencyTitle.setAlignment(Qt.AlignLeft|Qt.AlignVCenter)
 
         self.horizontalLayout_frequency.addWidget(self.labelFrequencyTitle)
 
@@ -442,6 +443,8 @@ class Ui_fileselect(object):
         self.comboFrequency.setObjectName(u"comboFrequency")
 
         self.horizontalLayout_frequency.addWidget(self.comboFrequency)
+
+        self.horizontalLayout_frequency.addStretch()
 
 
         self.verticalLayout_operationPanel.addLayout(self.horizontalLayout_frequency)

@@ -13,7 +13,7 @@ from PySide6.QtWidgets import QWidget
 
 
 class LoadingOverlay(QWidget):
-    def __init__(self, parent=None, color="#6D28D9", text="加载中..."):
+    def __init__(self, parent=None, color="#606c71", text="加载中..."):
         super().__init__(parent)
         self._angle = 0
         self._color = QColor(color)

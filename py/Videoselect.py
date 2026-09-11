@@ -537,11 +537,21 @@ class Videoselect(QMainWindow):
         if self.start_time > 0:
             cmd.extend(["-ss", str(self.start_time)])
         cmd.extend(["-i", self.video_path])
+        # 使用 -t (duration) 而不是 -to (absolute end time)
+        # 这样可以确保提取的时长准确
         if self.end_time < self.duration:
-            cmd.extend(["-to", str(self.end_time)])
+            duration = self.end_time - self.start_time
+            cmd.extend(["-t", str(duration)])
         if fps_str:
             cmd.extend(["-vf", f"fps={fps_str}"])
         cmd.extend(["-q:v", "2", os.path.join(output_dir, "frame_%04d.png")])
+
+        # 调试日志: 打印实际的ffmpeg命令和参数
+        print(f"[DEBUG] 频率文本: {freq_text}")
+        print(f"[DEBUG] 计算的fps_str: {fps_str}")
+        print(f"[DEBUG] 时间范围: start={self.start_time}, end={self.end_time}, duration={self.duration}")
+        print(f"[DEBUG] 范围秒数: {range_seconds}")
+        print(f"[DEBUG] FFmpeg命令: {' '.join(cmd)}")
 
         self._extract_worker = _ExtractWorker(cmd, output_dir, fps_str, range_seconds, self.duration)
         self._extract_worker.progress.connect(self._on_extract_progress)
@@ -565,10 +575,10 @@ class Videoselect(QMainWindow):
             frame_paths=frame_paths,
             subtitle_line_top=self._top_position,
             subtitle_line_bottom=self._bottom_position,
-            main_window=self.main_window,
+            main_window=self,
         )
         self.imagestitcher_window.show()
-        self.close()
+        self.hide()
 
 
 class _ExtractWorker(QThread):

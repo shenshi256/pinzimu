@@ -20,7 +20,7 @@ import requests
 import socket
 
 # 在文件开头添加版本号定义
-VERSION = "V1.0.1"
+VERSION = "V1.0.2"
 AUTHOR = "WXY"
 APPNAME = "PinZiMuGUI"
 UNKNOWNCPU = "UNKNOWN_CPU"
