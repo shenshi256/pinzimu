@@ -21,6 +21,10 @@ from PySide6.QtMultimediaWidgets import QVideoWidget
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QFrame
 from py_gui.videoselect_ui import Ui_fileselect
 from py.utils import TOP_POSITION, BOTTOM_POSITION, setup_window_icon, COPYRIGHT, get_project_root, setup_window_title, get_max_video_frames
+from py.video_geometry import container_pct_to_video_pct, video_content_rect
+
+
+SUBTITLE_POSITION_COORDINATE_VERSION = 2
 
 
 class Videoselect(QMainWindow):
@@ -45,6 +49,7 @@ class Videoselect(QMainWindow):
         self._is_muted = True
         self._top_position = TOP_POSITION
         self._bottom_position = BOTTOM_POSITION
+        self._positions_need_migration = False
         self._init_paths()
         self._init_ui()
         self._setup_video_widget()
@@ -95,8 +100,12 @@ class Videoselect(QMainWindow):
             layout.setSpacing(0)
 
         self.video_widget = QVideoWidget()
+        self.video_widget.setAspectRatioMode(Qt.AspectRatioMode.KeepAspectRatio)
         self.video_widget.setStyleSheet("background-color: #000000; border: none;")
         layout.addWidget(self.video_widget)
+        self.video_widget.videoSink().videoSizeChanged.connect(
+            self._sync_overlay_geometry
+        )
 
     def _load_video_info(self):
         if not self.video_path or not self.ffprobe_path:
@@ -333,12 +342,38 @@ class Videoselect(QMainWindow):
         self._overlay.installEventFilter(self)
 
     def _sync_overlay_geometry(self):
-        if not self._overlay or not self.ui.videoAreaFrame.isVisible():
+        if not self._overlay or not self.video_widget.isVisible():
             return
-        global_pos = self.ui.videoAreaFrame.mapToGlobal(QPoint(0, 0))
-        w = self.ui.videoAreaFrame.width()
-        h = self.ui.videoAreaFrame.height()
-        self._overlay.setGeometry(global_pos.x(), global_pos.y(), w, h)
+        video_size = self.video_widget.videoSink().videoSize()
+        video_rect = video_content_rect(self.video_widget.size(), video_size)
+
+        if (
+            self._positions_need_migration
+            and video_size.width() > 0
+            and video_size.height() > 0
+        ):
+            self._top_position = container_pct_to_video_pct(
+                self._top_position, self.video_widget.height(), video_rect
+            )
+            self._bottom_position = container_pct_to_video_pct(
+                self._bottom_position, self.video_widget.height(), video_rect
+            )
+            if self._bottom_position <= self._top_position + 5:
+                self._top_position = TOP_POSITION
+                self._bottom_position = BOTTOM_POSITION
+            self._positions_need_migration = False
+            self._overlay.set_positions(
+                self._top_position, self._bottom_position
+            )
+            self._save_positions()
+
+        global_pos = self.video_widget.mapToGlobal(video_rect.topLeft())
+        self._overlay.setGeometry(
+            global_pos.x(),
+            global_pos.y(),
+            video_rect.width(),
+            video_rect.height(),
+        )
 
     def showEvent(self, event):
         super().showEvent(event)
@@ -454,6 +489,11 @@ class Videoselect(QMainWindow):
         settings = QSettings("pinzimu", "pinzimu_gui")
         settings.setValue("subtitle_line_top", str(int(self._top_position)))
         settings.setValue("subtitle_line_bottom", str(int(self._bottom_position)))
+        if not self._positions_need_migration:
+            settings.setValue(
+                "subtitle_line_coordinate_version",
+                SUBTITLE_POSITION_COORDINATE_VERSION,
+            )
 
     def _load_positions(self):
         from PySide6.QtCore import QSettings
@@ -462,6 +502,19 @@ class Videoselect(QMainWindow):
         bottom_default = str(int(BOTTOM_POSITION))
         saved_top = settings.value("subtitle_line_top", top_default)
         saved_bottom = settings.value("subtitle_line_bottom", bottom_default)
+        has_saved_positions = settings.contains("subtitle_line_top") and settings.contains(
+            "subtitle_line_bottom"
+        )
+        try:
+            coordinate_version = int(
+                settings.value("subtitle_line_coordinate_version", 1)
+            )
+        except (ValueError, TypeError):
+            coordinate_version = 1
+        self._positions_need_migration = (
+            has_saved_positions
+            and coordinate_version < SUBTITLE_POSITION_COORDINATE_VERSION
+        )
         try:
             self._top_position = float(saved_top)
             self._bottom_position = float(saved_bottom)

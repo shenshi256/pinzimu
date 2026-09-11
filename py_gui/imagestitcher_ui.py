@@ -23,8 +23,8 @@ class Ui_ImageStitcher(object):
     def setupUi(self, ImageStitcher):
         if not ImageStitcher.objectName():
             ImageStitcher.setObjectName(u"ImageStitcher")
-        ImageStitcher.resize(1000, 650)
-        ImageStitcher.setMinimumSize(QSize(800, 600))
+        ImageStitcher.resize(1000, 800)
+        ImageStitcher.setMinimumSize(QSize(1000, 800))
         ImageStitcher.setStyleSheet(u"QMainWindow {\n"
 "    background-color: #FFFFFF;\n"
 "    font-family: \"Microsoft YaHei\", \"Segoe UI\", sans-serif;\n"

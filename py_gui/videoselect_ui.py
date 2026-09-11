@@ -24,7 +24,7 @@ class Ui_fileselect(object):
     def setupUi(self, fileselect):
         if not fileselect.objectName():
             fileselect.setObjectName(u"fileselect")
-        fileselect.resize(1000, 650)
+        fileselect.resize(1000, 800)
         fileselect.setMinimumSize(QSize(1000, 800))
         fileselect.setStyleSheet(u"QMainWindow {\n"
 "    background-color: #FFFFFF;\n"
