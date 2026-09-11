@@ -1,6 +1,9 @@
 from PySide6.QtCore import QPoint, QRect, Qt
 
 
+MINIMUM_RANGE_SECONDS = 1.0
+
+
 def video_content_rect(container_size, video_size):
     """Return the aspect-fitted video rect inside its display widget."""
     if (
@@ -26,3 +29,17 @@ def container_pct_to_video_pct(percent, container_height, video_rect):
     container_y = container_height * percent / 100.0
     video_y = container_y - video_rect.top()
     return max(0.0, min(100.0, video_y / video_rect.height() * 100.0))
+
+
+def clamp_start_time(value, end_time, duration):
+    duration = max(0.0, float(duration))
+    end_time = max(0.0, min(float(end_time), duration))
+    latest_start = max(0.0, end_time - MINIMUM_RANGE_SECONDS)
+    return max(0.0, min(float(value), latest_start))
+
+
+def clamp_end_time(value, start_time, duration):
+    duration = max(0.0, float(duration))
+    start_time = max(0.0, min(float(start_time), duration))
+    earliest_end = min(duration, start_time + MINIMUM_RANGE_SECONDS)
+    return max(earliest_end, min(float(value), duration))

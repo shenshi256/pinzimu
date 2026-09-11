@@ -21,7 +21,12 @@ from PySide6.QtMultimediaWidgets import QVideoWidget
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QFrame
 from py_gui.videoselect_ui import Ui_fileselect
 from py.utils import TOP_POSITION, BOTTOM_POSITION, setup_window_icon, COPYRIGHT, get_project_root, setup_window_title, get_max_video_frames
-from py.video_geometry import container_pct_to_video_pct, video_content_rect
+from py.video_geometry import (
+    clamp_end_time,
+    clamp_start_time,
+    container_pct_to_video_pct,
+    video_content_rect,
+)
 
 
 SUBTITLE_POSITION_COORDINATE_VERSION = 2
@@ -210,48 +215,59 @@ class Videoselect(QMainWindow):
             self.media_player.setPosition(0)
 
     def _on_slider_moved(self, value):
-        if self.media_player:
-            self.media_player.setPosition(value * 1000)
+        self._seek_preview(value)
 
     def _on_start_slider_moved(self, value):
-        self.start_time = float(value)
-        if self.start_time >= self.end_time - 1:
-            self.start_time = max(0.0, self.end_time - 1)
-            self.ui.sliderStartTime.blockSignals(True)
-            self.ui.sliderStartTime.setValue(int(self.start_time))
-            self.ui.sliderStartTime.blockSignals(False)
-        self._update_range_display()
+        self._set_start_time(value, seek_preview=True)
 
     def _on_end_slider_moved(self, value):
-        self.end_time = float(value)
-        if self.end_time <= self.start_time + 1:
-            self.end_time = min(self.duration, self.start_time + 1)
-            self.ui.sliderEndTime.blockSignals(True)
-            self.ui.sliderEndTime.setValue(int(self.end_time))
-            self.ui.sliderEndTime.blockSignals(False)
-        self._update_range_display()
+        self._set_end_time(value, seek_preview=True)
 
     def _set_start_from_current(self):
         if self.media_player and self.duration > 0:
             current = self.media_player.position() / 1000.0
-            if current >= self.end_time - 1:
-                return
-            self.start_time = current
-            self.ui.sliderStartTime.blockSignals(True)
-            self.ui.sliderStartTime.setValue(int(self.start_time))
-            self.ui.sliderStartTime.blockSignals(False)
-            self._update_range_display()
+            self._set_start_time(current, seek_preview=True)
 
     def _set_end_from_current(self):
         if self.media_player and self.duration > 0:
             current = self.media_player.position() / 1000.0
-            if current <= self.start_time + 1:
-                return
-            self.end_time = current
-            self.ui.sliderEndTime.blockSignals(True)
-            self.ui.sliderEndTime.setValue(int(self.end_time))
-            self.ui.sliderEndTime.blockSignals(False)
-            self._update_range_display()
+            self._set_end_time(current, seek_preview=True)
+
+    def _set_start_time(self, value, seek_preview=False):
+        if self.duration <= 0:
+            return
+        self.start_time = clamp_start_time(value, self.end_time, self.duration)
+        self.ui.sliderStartTime.blockSignals(True)
+        self.ui.sliderStartTime.setValue(int(self.start_time))
+        self.ui.sliderStartTime.blockSignals(False)
+        self._update_range_display()
+        if seek_preview:
+            self._seek_preview(self.start_time)
+
+    def _set_end_time(self, value, seek_preview=False):
+        if self.duration <= 0:
+            return
+        self.end_time = clamp_end_time(value, self.start_time, self.duration)
+        self.ui.sliderEndTime.blockSignals(True)
+        self.ui.sliderEndTime.setValue(int(self.end_time))
+        self.ui.sliderEndTime.blockSignals(False)
+        self._update_range_display()
+        if seek_preview:
+            self._seek_preview(self.end_time)
+
+    def _seek_preview(self, seconds):
+        if not self.media_player or self.duration <= 0:
+            return
+        target_seconds = max(0.0, min(float(seconds), self.duration))
+        target_ms = int(round(target_seconds * 1000))
+        duration_ms = int(round(self.duration * 1000))
+        target_ms = max(0, min(target_ms, duration_ms))
+        self.media_player.setPosition(target_ms)
+
+        self.ui.sliderCurrentTime.blockSignals(True)
+        self.ui.sliderCurrentTime.setValue(target_ms // 1000)
+        self.ui.sliderCurrentTime.blockSignals(False)
+        self._update_time_display(target_ms / 1000.0)
 
     def _update_time_display(self, current=0):
         self.ui.labelCurrentTime.setText(
@@ -260,10 +276,18 @@ class Videoselect(QMainWindow):
 
     def _update_sliders_range(self):
         max_val = max(1, int(self.duration))
-        self.ui.sliderCurrentTime.setRange(0, max_val)
-        self.ui.sliderStartTime.setRange(0, max_val)
-        self.ui.sliderEndTime.setRange(0, max_val)
-        self.ui.sliderEndTime.setValue(max_val)
+        sliders = (
+            self.ui.sliderCurrentTime,
+            self.ui.sliderStartTime,
+            self.ui.sliderEndTime,
+        )
+        for slider in sliders:
+            slider.blockSignals(True)
+            slider.setRange(0, max_val)
+        self.ui.sliderStartTime.setValue(int(self.start_time))
+        self.ui.sliderEndTime.setValue(int(self.end_time))
+        for slider in sliders:
+            slider.blockSignals(False)
         self._update_range_display()
 
     def _update_range_display(self):
